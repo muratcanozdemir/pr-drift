@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pr-drift"
+version = "0.1.0"
+description = "Unsupervised PR drift detector using zstd compression"
+readme = "README.md"
+requires-python = ">=3.14"
+license = {text = "MIT"}
+
+authors = [
+    {name = "Your Name"}
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Version Control",
+    "Topic :: System :: Monitoring",
+]
+
+dependencies = []
