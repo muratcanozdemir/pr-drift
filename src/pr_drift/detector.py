@@ -1,6 +1,6 @@
 from collections import deque
-from statistics import mean, stdev
 from compression.zstd import ZstdCompressor, ZstdDict
+from statistics import mean, stdev
 
 
 class PRDriftDetector:
