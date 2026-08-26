@@ -1,5 +1,5 @@
 import sqlite3
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 
@@ -38,7 +38,7 @@ class Storage:
         conn.execute(
             "INSERT INTO pr_events VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
             (
-                datetime.utcnow().isoformat(),
+                datetime.now(UTC).isoformat(),
                 owner,
                 repo,
                 pr_number,

@@ -1,35 +1,46 @@
+import argparse
 import json
 import subprocess
+
 from pr_drift.detector import PRDriftDetector
 from pr_drift.storage import Storage
 
 
-REPO_PATH = "/path/to/repo"
-PR_LIST = "pr_list.json"
-DB_PATH = "replay.db"
-
-
-def get_diff(commit):
+def get_diff(repo_path, commit):
     """
     Diff between merge commit and its first parent.
     """
     cmd = ["git", "show", "--format=", commit]
-    out = subprocess.check_output(cmd, cwd=REPO_PATH)
+    out = subprocess.check_output(cmd, cwd=repo_path)
     return out
 
 
-def main():
-    detector = PRDriftDetector()
-    store = Storage(DB_PATH)
+def parse_args():
+    parser = argparse.ArgumentParser(description="Replay PR drift scores over repo history.")
+    parser.add_argument("--repo", required=True, help="Path to the git repository to replay.")
+    parser.add_argument(
+        "--pr-list",
+        default="pr_list.json",
+        help="JSON file with a list of {pr, merge_commit} entries.",
+    )
+    parser.add_argument("--db", default="replay.db", help="SQLite database path for results.")
+    return parser.parse_args()
 
-    with open(PR_LIST) as f:
+
+def main():
+    args = parse_args()
+
+    detector = PRDriftDetector()
+    store = Storage(args.db)
+
+    with open(args.pr_list) as f:
         prs = json.load(f)
 
     for item in prs:
         pr = item["pr"]
         commit = item["merge_commit"]
 
-        diff = get_diff(commit)
+        diff = get_diff(args.repo, commit)
         metrics = detector.observe(diff)
 
         store.record(
