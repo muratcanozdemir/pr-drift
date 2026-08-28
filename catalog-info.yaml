@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pr-drift
+  description: Unsupervised pull-request drift/anomaly detector that models a repo's historical diffs as a statistical baseline via zstd compression entropy and flags PRs that deviate significantly.
+  tags: [python, service, cli, anomaly-detection]
+  annotations:
+    github.com/project-slug: muratcanozdemir/pr-drift
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  owner: user:default/muratcanozdemir
+  lifecycle: experimental

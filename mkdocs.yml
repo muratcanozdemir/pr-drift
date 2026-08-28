@@ -1,0 +1,5 @@
+site_name: pr-drift
+nav:
+  - Home: index.md
+plugins:
+  - techdocs-core
